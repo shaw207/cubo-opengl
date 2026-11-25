@@ -1,0 +1,23 @@
+#version 330
+
+uniform mat4 M;
+uniform mat4 MVP;
+
+in vec4 vPos;
+in vec4 vColor;
+in vec4 vNormal;
+in vec4 vTextureCoords;
+
+out vec4 fColor;
+out vec4 fPos;
+out vec4 fNormal;
+out vec4 fTextureCoords;
+
+void main() {
+    gl_Position = MVP * vPos;
+    fColor = vColor;
+    fPos = M * vPos;
+    fNormal = inverse(transpose(M)) * vNormal;
+    fNormal = vec4(normalize(fNormal.xyz), 0.0);
+    fTextureCoords = vTextureCoords;
+}
